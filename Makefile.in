@@ -1,8 +1,11 @@
 MODULE    = hantek.sys
-IMPORTS   = ntoskrnl usb-1.0.
-EXTRAINCL = -I/usr/include/ -I/usr/include/wine -I/usr/include/wine/wine/windows
+UNIXLIB   = hantek.so
+IMPORTS   = ntoskrnl
+UNIX_LIBS    = $(USB_LIBS)
+UNIX_CFLAGS  = $(USB_CFLAGS)
 
 EXTRADLLFLAGS = -Wl,--subsystem,native
 
-C_SRCS = \
-	main.c
+SOURCES = \
+	main.c \
+	unixlib.c

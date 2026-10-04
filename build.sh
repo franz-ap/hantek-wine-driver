@@ -1,14 +1,26 @@
 #!/bin/bash -e
+#
+# Build for wine >= 8 (PE driver hantek.sys + Unix library hantek.so).
+#
+# The wine tree must live on a filesystem that supports symlinks: on a
+# VirtualBox shared folder (vboxsf) configure falls back to "cp -pR" and
+# makedep aborts with "Assertion `cmd->files.count == 1' failed".
+# In that case copy the tree to a local disk and run build.sh from there.
 
+WINE_LIBDIR=${WINE_LIBDIR:-/opt/wine-stable/lib/wine}
+
+# The stub Makefile in this directory only exists once configure has seen
+# dlls/hantek.sys, so (re)configure if it is missing.
 if [ ! -f Makefile ]
 then
-  ( cd ../../ && ./configure --enable-win64 && make dlls/hantek.sys )
+  ( cd ../../ && ./configure --enable-win64 && make dlls/hantek.sys/all )
 fi
 
 make
 
-sudo cp hantek.sys.so /usr/lib/x86_64-linux-gnu/wine/
-cp hantek.sys.fake ~/.wine/drive_c/windows/system32/drivers/hantek.sys
+sudo cp x86_64-windows/hantek.sys "$WINE_LIBDIR/x86_64-windows/"
+sudo cp hantek.so "$WINE_LIBDIR/x86_64-unix/"
+cp x86_64-windows/hantek.sys ~/.wine/drive_c/windows/system32/drivers/hantek.sys
 #wine sc delete Hantek
 
 #define SERVICE_BOOT_START   0x00000000
