@@ -18,6 +18,7 @@ fi
 
 make
 
+set -x
 sudo cp x86_64-windows/hantek.sys "$WINE_LIBDIR/x86_64-windows/"
 sudo cp hantek.so "$WINE_LIBDIR/x86_64-unix/"
 cp x86_64-windows/hantek.sys ~/.wine/drive_c/windows/system32/drivers/hantek.sys
@@ -37,5 +38,4 @@ cp x86_64-windows/hantek.sys ~/.wine/drive_c/windows/system32/drivers/hantek.sys
 # start: boot = 0 auto = 2  type: kernel = 1 filesys = 2
 
 sleep 1
-
 WINEDEBUG=trace+hantek wine sc create Hantek binPath= C:\\windows\\system32\\drivers\\hantek.sys type= kernel start= auto
