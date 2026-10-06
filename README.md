@@ -2,36 +2,41 @@
 
 Tested with Hantek 6254BD.
 
-While I was working on getting this ready for wine 11, I found out, that it is *no longer necessary.*
-wine-11.0 supports it *out of the box* (plus the winetricks below, plus udev rule below).
+While I was working on getting this ready for wine 11, I found out, that it was **no longer necessary.**
+wine-11.0 supports it **out of the box** (plus the winetricks below, plus udev rule below).
 
 ## Install original Hantek software
 
 - Download the latest version
+
 E.g. from http://www.hantek.com/download
 
 - Unpack and install it into wine
-Note: In this example drive T: points to /tmp.
+
 ```
 $ cd /tmp
-$ unrar Hantek_6254BD/Hantek-6000_Ver2.2.7_D20220325.rar'
+$ unrar Hantek-6000_Ver2.2.7_D20220325.rar
 $ cd Hantek-6000_Ver2.2.7_D20220325
 $ wine Setup.EXE
 ```
 
 - Enable winetricks, because the Hantek software requires a DLL that does not come with wine.
+
 Details can be found here
 https://gitlab.winehq.org/wine/wine/-/wikis/Winetricks
 and here
 https://github.com/Winetricks/winetricks
+
 The latest release is available at
 https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks.
 Right-click on that link and use 'Save As' to save a fresh copy into a directory of your choice, that is mentioned in your $PATH. Set execute rights for it.
 
 - Add required DLL
+
 Carefully watch for warnings and install additional packages, that winetricks may request, e.g.:
-warning: Cannot find cabextract.  Please install it (e.g. 'sudo apt install cabextract' or 'sudo yum install cabextract').
+*warning: Cannot find cabextract.  Please install it (e.g. 'sudo apt install cabextract' or 'sudo yum install cabextract').*
 Then repeat.
+
 ```
 $ winetricks mfc42
 ```
@@ -65,7 +70,7 @@ cd dlls/hantek.sys/
 - Connect your USB oscilloscope
 
 - Check access rights
-Find your device. For a Hantek 6254BD you would see something like that:
+Find your device. With a Hantek 6254BD connected, you would see something like that:
 ```
 $ lsusb
 ...
